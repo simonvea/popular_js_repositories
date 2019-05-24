@@ -96,6 +96,10 @@ tr:nth-child(even) {
 ========= Navbar ========
 =========================
  */
+
+.navbar {
+    margin-bottom: 5px;
+}
   
 .navbar a {
     color: black;
