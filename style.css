@@ -1,0 +1,144 @@
+/* 
+========================
+====== Variables =======
+========================
+ */
+
+ :root {
+    /* Colors */
+    --primary-color: #f7f4ea;
+    --primary-color-light: #fff;
+    --primary-color-dark: #c4c1b8;
+    --secondary-color: #75c9c8;
+    --secondary-color-light: #a8fcfb;
+    --secondary-color-dark: #429897;
+}
+
+/* 
+========================
+====== Main design =====
+========================
+ */
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html { 
+    background-color: var(--primary-color);
+    color: #000;
+    font-size: 16px;
+}
+
+header {
+    text-align: center;
+    padding: 5vh;
+}
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* 
+=========================
+======= Table ===========
+=========================
+ */
+
+.table-container {
+    width: 100%;
+    padding: 0 10px 10px 10px;
+    overflow-x: scroll;
+}
+ /* The main function of table-container is to make the table more usable on mobile */
+
+table {
+    table-layout: fixed;
+    width: 700px;
+    border: none;
+    border-collapse: collapse;
+    margin: 0 auto 5vh;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: var(--secondary-color);
+}
+
+tr:nth-child(odd) {
+    background-color: var(--primary-color-light);
+}
+
+tr:nth-child(even) {
+    background-color: var(--primary-color);
+}
+
+/* Column width */
+.col-stars {width: 15%;}
+.col-name {width: 20%}
+.col-description {width: 55%;}
+.col-link {width: 10%;}
+
+/* 
+=========================
+========= Navbar ========
+=========================
+ */
+  
+.navbar a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: var(--primary-color-light);
+    border-radius: 2px;
+}
+
+.navbar a.active {
+    background-color: var(--secondary-color);
+  }
+
+.navbar a:hover {
+    cursor: pointer;
+}
+  
+.navbar a:hover:not(.active) {
+    background-color: var(--primary-color-dark);
+}
+
+/* 
+=========================
+======== Loader =========
+=========================
+*/
+
+.loader-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.loader {
+    border: 16px solid var(--secondary-color);
+    border-top: 16px solid var(--primary-color-light);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
