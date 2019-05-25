@@ -20,8 +20,8 @@ function cleanData(data) {
             .replace(/</g, "&lt;") //show html tags
             .replace(/>/g, "&gt;")
             .trim(); //remove whitespace from front and end of description
-
-            repository.name = repository.name.charAt(0).toUpperCase() + repository.name.slice(1);
+            
+            repository.name = repository.name.charAt(0).toUpperCase() + repository.name.slice(1)
     })
     return data
 }

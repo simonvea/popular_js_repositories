@@ -1,5 +1,5 @@
 import getData from "./data_functions.js"
-import {updateTable, createNavbar, addNavbarEvents, updatePagination, errorDomMessage} from "./dom_functions.js"
+import {updateTable, createNavbar, addNavbarEvents, setActiveNumber, errorDomMessage} from "./dom_functions.js"
 
 const repositories = [];
 
@@ -14,7 +14,7 @@ getData()
         updateTable(firstPage);
         createNavbar(numberOfPages);
         addNavbarEvents();
-        updatePagination(pageIndex);
+        setActiveNumber(pageIndex);
     })
     .catch(err => {
         console.error("Noe gikk galt!", err);

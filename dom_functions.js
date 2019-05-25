@@ -20,11 +20,11 @@ function updatePage() {
     const index = this.innerText-1;
     const page = data[index];
 
-    updatePagination(index);
+    setActiveNumber(index);
     updateTable(page);
 }
 
-function updatePagination(index) {
+function setActiveNumber(index) {
     const navLinks = document.querySelectorAll(".navbar a");
 
     navLinks.forEach(link => link.classList.remove("active"));
@@ -59,4 +59,4 @@ function errorDomMessage() {
 
 
 
-export {updateTable, createNavbar, addNavbarEvents, updatePagination, errorDomMessage}
+export {updateTable, createNavbar, addNavbarEvents, setActiveNumber, errorDomMessage}
