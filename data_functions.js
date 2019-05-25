@@ -1,8 +1,29 @@
 
-async function getData(url) {
-    const response = await fetch(url);
+async function getData() {
+    const gitHubUrl = "https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100";
+    const pageSize = 20;
+
+    const response = await fetch(gitHubUrl);
     const data = await response.json();
-    return data.items
+    const repositories = data.items;
+    const cleanedData = cleanData(repositories);
+    const pageSeparatedData = separateDataToPages(cleanedData, pageSize);
+    
+    return pageSeparatedData
+}
+
+function cleanData(data) {
+    data.forEach(repository => {
+        repository.description = repository.description
+            .replace(/:\w+:/g, "") //remove emojis
+            .replace(/&/g, "&amp;") //show &
+            .replace(/</g, "&lt;") //show html tags
+            .replace(/>/g, "&gt;")
+            .trim(); //remove whitespace from front and end of description
+
+            repository.name = repository.name.charAt(0).toUpperCase() + repository.name.slice(1);
+    })
+    return data
 }
 
 function separateDataToPages(data, pageSize) {
@@ -13,18 +34,4 @@ function separateDataToPages(data, pageSize) {
     return pagedData
 }
 
-function cleanData(data) {
-    data.forEach(data => {
-        data.description = data.description
-            .replace(/:\w+:/g, "") //remove emojis
-            .replace(/&/g, "&amp;") //show &
-            .replace(/</g, "&lt;") //show html tags
-            .replace(/>/g, "&gt;")
-            .trim(); //remove whitespace from front and end of description
-
-        data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
-    })
-    return data
-}
-
-export {getData, separateDataToPages, cleanData}
+export default getData

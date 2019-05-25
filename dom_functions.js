@@ -1,11 +1,14 @@
-import pagedData from "./main.js"
+import data from "./main.js"
 
-function createNavbar(pages) {
+function createNavbar(numberOfPages) {
     const navbar = document.querySelector(".navbar");
     const html = [];
     
-    pages.forEach((page, pageNumber) => html.push(`<a>${pageNumber}</a>`)).join('')
-    navbar.innerHTML = html;
+    for(let pageNumber = 1; pageNumber <= numberOfPages; pageNumber++) {
+        html.push(`<a>${pageNumber}</a>`)
+    }
+    
+    navbar.innerHTML = html.join('');
 }
 
 function addNavbarEvents() {
@@ -15,7 +18,7 @@ function addNavbarEvents() {
 
 function updatePage() {
     const index = this.innerText-1;
-    const page = pagedData[index];
+    const page = data[index];
 
     updatePagination(index);
     updateTable(page);
@@ -28,9 +31,9 @@ function updatePagination(index) {
     navLinks[index].classList.add("active")
 }
 
-function updateTable(data) {
+function updateTable(page) {
     const tableBody = document.querySelector("tbody");
-    const html = data.map(row => {
+    const html = page.map(row => {
         return `
         <tr>
             <td>${row.stargazers_count}</td>
@@ -44,6 +47,16 @@ function updateTable(data) {
     tableBody.innerHTML = html
 }
 
+function errorDomMessage() {
+    const tableBody = document.querySelector("tbody");
+    tableBody.innerHTML = `
+        <tr>
+            <td colspan="4" style="text-align: center">
+                <h3> Noe gikk galt i loading av data. Se konsoll for mer informasjon.</h3>
+            </td>
+        </tr>`
+}
 
 
-export {updateTable, createNavbar, addNavbarEvents, updatePagination}
+
+export {updateTable, createNavbar, addNavbarEvents, updatePagination, errorDomMessage}

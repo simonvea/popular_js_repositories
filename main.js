@@ -1,27 +1,24 @@
-import {getData, cleanData, separateDataToPages} from "./data_functions.js"
-import {updateTable, createNavbar, addNavbarEvents, updatePagination} from "./dom_functions.js"
-
-const gitHubUrl = "https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100";
+import getData from "./data_functions.js"
+import {updateTable, createNavbar, addNavbarEvents, updatePagination, errorDomMessage} from "./dom_functions.js"
 
 const repositories = [];
 
-getData(gitHubUrl)
+getData()
     .then(data => {
-        //fix data and push to local state
-        const cleanedData = cleanData(data);
-        const separatedData = separateDataToPages(cleanedData, 20);
-        repositories.push(...separatedData);
+        repositories.push(...data);
 
-        //present data
-        updateTable(repositories[0]); //update table with first page of repositories
-        createNavbar(repositories); //create navbar based on how many pages of repositories
+        const firstPage = repositories[0];
+        const pageIndex = 0;
+        const numberOfPages = repositories.length;
+
+        updateTable(firstPage);
+        createNavbar(numberOfPages);
         addNavbarEvents();
-        updatePagination(0); //set first page as active page by sending the first index in navbar nodeList
+        updatePagination(pageIndex);
     })
     .catch(err => {
         console.error("Noe gikk galt!", err);
-        const tableBody = document.querySelector("tbody");
-        tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center"><h3> Noe gikk galt i loading av data. Se konsoll for mer informasjon.</h3></td></tr>`
+        errorDomMessage();
     });
 
 export default repositories
