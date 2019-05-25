@@ -1,20 +1,25 @@
-import repositories from "./main.js"
+import pagedData from "./main.js"
 
-function createNavbar(pageSeparatedData) {
+function createNavbar(pages) {
     const navbar = document.querySelector(".navbar");
     const html = [];
+    
+    pages.forEach((page, pageNumber) => html.push(`<a>${pageNumber}</a>`)).join('')
+    navbar.innerHTML = html;
+}
 
-    //create navbar content
-    for(let pageNumber = 1; pageNumber <= pageSeparatedData.length; pageNumber++) {
-        html.push(`<a>${pageNumber}</a>`)
-    }
-    navbar.innerHTML = html.join('');
-
-    //add eventlisteners
+function addNavbarEvents() {
     const navLinks = document.querySelectorAll(".navbar a");
     navLinks.forEach(link => link.addEventListener("click", updatePage))
 }
 
+function updatePage() {
+    const index = this.innerText-1;
+    const page = pagedData[index];
+
+    updatePagination(index);
+    updateTable(page);
+}
 
 function updatePagination(index) {
     const navLinks = document.querySelectorAll(".navbar a");
@@ -25,13 +30,13 @@ function updatePagination(index) {
 
 function updateTable(data) {
     const tableBody = document.querySelector("tbody");
-    const html = data.map(rep => {
+    const html = data.map(row => {
         return `
         <tr>
-            <td>${rep.stargazers_count}</td>
-            <td>${rep.name}</td>
-            <td>${rep.description}</td>
-            <td><a href="${rep.html_url}" target="_blank">Link</a></td>
+            <td>${row.stargazers_count}</td>
+            <td>${row.name}</td>
+            <td>${row.description}</td>
+            <td><a href="${row.html_url}" target="_blank">Link</a></td>
         </tr>
         `
     }).join('');
@@ -39,10 +44,6 @@ function updateTable(data) {
     tableBody.innerHTML = html
 }
 
-function updatePage() {
-    const index = this.innerText-1;
-    updatePagination(index)
-    updateTable(repositories[index]) //NB!!! Using global data "repositories"!
-}
 
-export {updateTable, createNavbar, updatePagination}
+
+export {updateTable, createNavbar, addNavbarEvents, updatePagination}

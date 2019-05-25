@@ -1,5 +1,5 @@
 import {getData, cleanData, separateDataToPages} from "./data_functions.js"
-import {updateTable, createNavbar, updatePagination} from "./dom_functions.js"
+import {updateTable, createNavbar, addNavbarEvents, updatePagination} from "./dom_functions.js"
 
 const gitHubUrl = "https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100";
 
@@ -15,6 +15,7 @@ getData(gitHubUrl)
         //present data
         updateTable(repositories[0]); //update table with first page of repositories
         createNavbar(repositories); //create navbar based on how many pages of repositories
+        addNavbarEvents();
         updatePagination(0); //set first page as active page by sending the first index in navbar nodeList
     })
     .catch(err => {
